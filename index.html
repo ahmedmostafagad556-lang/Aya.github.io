@@ -1,1 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إلى آية ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
+<style>
+:root {
+    --primary: #ff4d6d;
+    --accent: #ff7ab6;
+    --bg-gradient: linear-gradient(180deg, #1a1033 0%, #2b1d4b 50%, #000 100%);
+}
+
+body {
+    margin: 0;
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg-gradient);
+    color: white;
+    overflow-x: hidden;
+    text-align: center;
+    padding-bottom: 120px;
+}
+
+/* شاشة الدخول */
+#intro {
+    position: fixed; inset: 0;
+    background: radial-gradient(circle at center, #ff4d6d 0%, #300020 40%, #000 80%);
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column; z-index: 2000; transition: 1.5s;
+}
+.fadeOut { opacity: 0; transform: scale(1.5); pointer-events: none; }
+#intro input { padding: 15px; border-radius: 30px; border: 2px solid var(--primary); background: rgba(255,255,255,0.1); color: white; text-align: center; outline: none; font-size: 18px; margin: 15px; }
+
+/* المحتوى */
+.main-content { display: none; padding: 20px; max-width: 800px; margin: auto; animation: fadeIn 2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* العداد */
+.counter-section { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border-radius: 30px; padding: 25px; margin: 30px 10px; border: 1px solid rgba(255,255,255,0.1); }
+.time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+@media (min-width: 600px) { .time-grid { grid-template-columns: repeat(6, 1fr); } }
+.time-box { background: rgba(255, 77, 109, 0.2); padding: 10px; border-radius: 15px; }
+.time-box span { font-size: 20px; font-weight: bold; display: block; color: var(--accent); }
+
+/* الكروت القلابة - التنسيق المظبوط */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 10px;
+    margin: 30px 0;
+}
+@media (min-width: 768px) { .cards-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.flip-card { height: 150px; perspective: 1000px; }
+.flip-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+.flip-card:hover .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+    position: absolute; width: 100%; height: 100%;
+    backface-visibility: hidden; border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 10px; font-weight: bold; font-size: 15px;
+    border: 1px solid rgba(255,255,255,0.2); box-sizing: border-box;
+}
+.flip-front { background: rgba(255, 255, 255, 0.1); font-size: 40px; }
+.flip-back { transform: rotateY(180deg); background: var(--primary); color: #fff; box-shadow: 0 5px 15px rgba(255,77,109,0.4); }
+
+/* الجاليري - الـ 6 صور */
+.photo-story { display: flex; flex-direction: column; gap: 30px; margin: 40px 0; }
+.story-card { background: rgba(255, 255, 255, 0.08); border-radius: 25px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); }
+.img-container { width: 100%; height: 280px; overflow: hidden; border-radius: 20px; }
+@media (min-width: 768px) { .img-container { height: 400px; } }
+.story-card img { width: 100%; height: 100%; object-fit: cover; }
+.story-text { margin-top: 15px; font-size: 18px; color: var(--accent); font-style: italic; }
+
+/* القلوب الطائرة */
+.bg-heart { position: fixed; bottom: -10%; color: var(--primary); opacity: 0.5; z-index: -1; animation: floatUp 6s linear infinite; pointer-events: none; }
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+/* المشغل السفلي */
+.music-player { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); border-radius: 50px; padding: 10px 20px; display: none; align-items: center; z-index: 1000; border: 1px solid var(--primary); }
+#progress-bar { height: 6px; width: 0%; background: var(--primary); border-radius: 5px; }
+
+/* زر الرسالة */
+.special-msg-btn { background: linear-gradient(45deg, #ff4d6d, #ff7ab6); color: white; border: none; padding: 15px 30px; border-radius: 50px; margin: 20px 0; font-weight: bold; cursor: pointer; animation: pulse 2s infinite; font-family: inherit; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+#msgModal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 3000; }
+.modal-content { background: #1a1033; border: 2px solid var(--primary); padding: 30px; border-radius: 25px; max-width: 80%; position: relative; }
+</style>
+</head>
+<body>
+
+<div id="intro">
+    <h2>أهلاً يا أميرتي ❤️</h2>
+    <input type="password" id="pass" placeholder="Password (aya)">
+    <button onclick="checkPass()" style="padding:12px 35px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer; font-weight:bold;">دخول</button>
+</div>
+
+<div class="main-content" id="content">
+    <h1 style="color: var(--primary);">حبيبة قلبي آية ❤️</h1>
+    <div id="typing-text" style="min-height: 50px; margin-bottom: 20px;"></div>
+
+    <div class="counter-section">
+        <h3>بقالي معاكي أجمل:</h3>
+        <div class="time-grid">
+            <div class="time-box"><span id="y">0</span> سنة</div>
+            <div class="time-box"><span id="mo">0</span> شهر</div>
+            <div class="time-box"><span id="d">0</span> يوم</div>
+            <div class="time-box"><span id="h">0</span> ساعة</div>
+            <div class="time-box"><span id="m">0</span> دقيقة</div>
+            <div class="time-box"><span id="s">0</span> ثانية</div>
+        </div>
+    </div>
+
+    <button class="special-msg-btn" onclick="openMsg()">💌 رسالة خاصة ليكي لوحدك</button>
+
+    <div class="photo-story">
+        <div class="story-card"><div class="img-container"><img src="photo1.jpg"></div><div class="story-text">"أول مرة عيني شافت عينك.. حياتي بدأت" ❤️</div></div>
+        <div class="story-card"><div class="img-container"><img src="photo2.jpg"></div><div class="story-text">"كل ضحكة منك بتنور قلبي من جوه" ✨</div></div>
+        <div class="story-card"><div class="img-container"><img src="photo3.jpg"></div><div class="story-text">"انتي السند والظهر وكل حاجة حلوة" 💍</div></div>
+        <div class="story-card"><div class="img-container"><img src="photo4.jpg"></div><div class="story-text">"مش مجرد زوجة.. انتي بنتي وصاحبتي" 🌹</div></div>
+        <div class="story-card"><div class="img-container"><img src="photo5.jpg"></div><div class="story-text">"مهما فات وقت.. حبك في قلبي بيزيد" ♾️</div></div>
+        <div class="story-card"><div class="img-container"><img src="photo6.jpg"></div><div class="story-text">"وعد مني هفضل أحبك لآخر نفس" ❤️</div></div>
+    </div>
+
+    <h2 style="color: var(--accent);">إلمسي الكروت دي 😉</h2>
+    <div class="cards-grid">
+        <div class="flip-card"><div class="flip-inner"><div class="flip-front">💌</div><div class="flip-back">أنتي رزق من ربنا</div></div></div>
+        <div class="flip-card"><div class="flip-inner"><div class="flip-front">🌸</div><div class="flip-back">جمالك ملوش وصف</div></div></div>
+        <div class="flip-card"><div class="flip-inner"><div class="flip-front">👑</div><div class="flip-back">ملكة قلبي للأبد</div></div></div>
+        <div class="flip-card"><div class="flip-inner"><div class="flip-front">⭐</div><div class="flip-back">نجمتي المضيئة</div></div></div>
+    </div>
+
+    <div id="msgModal"><div class="modal-content">
+        <span class="close-modal" onclick="closeMsg()">&times;</span>
+            <div style="font-size: 20px; line-height: 1.8; color: #fff; font-style: italic;">
+                يا أغلى حاجة حصلت في دنيتي.. <br><br>
+                عارفة يا آية، أنا كل يوم بكتشف إني بحبك أكتر من اليوم اللي قبله. انتي مش بس مراتي، انتي الضحكة اللي بتطلع من قلبي بجد، والأمان اللي بلقاه لما الدنيا تضيق بيا. <br><br>
+                <b>بحبك أوي يا يويو ❤️</b> <br><br>
+                <small style="color:var(--accent)">- حبيبك أحمد</small>
+    </div></div>
+</div>
+
+<div class="music-player" id="player">
+    <button onclick="toggleMusic()" style="background:var(--primary); border:none; border-radius:50%; width:40px; height:40px; color:white; cursor:pointer;">⏸</button>
+    <div style="flex:1; margin:0 15px; background:#444; height:6px; border-radius:5px;"><div id="progress-bar"></div></div>
+</div>
+
+<audio id="bgMusic" loop src="song.mp3"></audio>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+function checkPass() {
+    if(document.getElementById("pass").value.toLowerCase() === "aya") {
+        document.getElementById("intro").classList.add("fadeOut");
+        setTimeout(() => {
+            document.getElementById("intro").style.display = "none";
+            document.getElementById("content").style.display = "block";
+            document.getElementById("player").style.display = "flex";
+            music.play();
+            startScripts();
+        }, 1000);
+    } else { alert("كلمة السر غلط يا حبيبتي ❤️"); }
+}
+
+function startScripts() {
+    setInterval(updateCounter, 1000);
+    setInterval(createBgHeart, 600);
+    startTyping();
+}
+
+function createBgHeart() {
+    const h = document.createElement("div");
+    h.innerHTML = "❤️";
+    h.className = "bg-heart";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+}
+
+const start = new Date("2021-07-23T00:00:00");
+function updateCounter() {
+    const diff = new Date() - start;
+    const d = Math.floor(diff/86400000);
+    document.getElementById("y").innerText = Math.floor(d/365);
+    document.getElementById("mo").innerText = Math.floor((d%365)/30);
+    document.getElementById("d").innerText = d%30;
+    document.getElementById("h").innerText = Math.floor((diff/3600000)%24);
+    document.getElementById("m").innerText = Math.floor((diff/60000)%60);
+    document.getElementById("s").innerText = Math.floor((diff/1000)%60);
+}
+
+function startTyping() {
+    const text = "من يوم 23-7-2021 ودنيتي بقيت أجمل بكتير.. بحبك يا آية ❤️";
+    let i = 0;
+    const type = () => {
+        if(i < text.length) {
+            document.getElementById("typing-text").innerHTML += text.charAt(i);
+            i++; setTimeout(type, 70);
+        }
+    };
+    type();
+}
+
+function openMsg() { document.getElementById("msgModal").style.display = "flex"; }
+function closeMsg() { document.getElementById("msgModal").style.display = "none"; }
+function toggleMusic() { music.paused ? music.play() : music.pause(); }
+music.ontimeupdate = () => { document.getElementById("progress-bar").style.width = (music.currentTime / music.duration) * 100 + "%"; };
+</script>
+</body>
+</html>
